@@ -1,11 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { usePlatform } from "@hooks";
-import { Box } from "native-base";
-import { Dimensions } from "react-native";
-import { HomeBottomTabOprions, HomeGameTopTabOptions } from "./utils/options";
-import { useGetAllGamesQuery } from "@state/api/game";
+import { HomeBottomTabOprions } from "./utils/options";
 import Home from "@screens/User/Home/Home";
 import { UserBottomTabParamList, UserStackParamList } from "./utils/types";
 

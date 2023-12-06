@@ -4,8 +4,12 @@ export { default as Background } from "./Background/Background";
 export { default as Button } from "./Button/Button";
 export { default as Badge } from "./Badge/Badge";
 export { default as Card } from "./Card/Card";
-export { default as Checkbox } from "./Checkbox/Checkbox";
-export { Column, ColumnAround, ColumnBetween, ColumnCentered } from "./Column/Column";
+export {
+  Column,
+  ColumnAround,
+  ColumnBetween,
+  ColumnCentered,
+} from "./Column/Column";
 export { default as Container } from "./Container/Container";
 export { default as DynamicComponent } from "./DynamicComponent/DynamicComponent";
 export { BackIcon } from "./Icons";
@@ -15,18 +19,11 @@ export { default as Select } from "./Input/Select";
 export { default as Label } from "./Label/Label";
 export { Empty, Error, default as List, Loading } from "./List/List";
 export { default as ConfirmationModal } from "./Modal/ConfirmationModal";
-export { default as ImageModal } from "./Modal/ImageModal";
 export { default as Modal } from "./Modal/Modal";
-export { default as ReviewModal } from "./Modal/ReviewModal";
-export { default as Rating } from "./Rating/Rating";
 export { default as RootContainer } from "./RootContainer/RootContainer";
 export { Row, RowAround, RowBetween, RowCentered } from "./Row/Row";
 export { default as Seperative } from "./Seperative/Seperative";
 export { default as Skeleton } from "./Skeleton/Skeleton";
-export { default as Switch } from "./Switch/Switch";
 export { TextMuted, TextNormal, TextTiny, TextTitle } from "./Text/Text";
 export { default as Toggle } from "./Toggle/Toggle";
 export { default as Touch } from "./Touch/Touch";
-export { default as Map } from "./Map/Map";
-export { default as EditMap } from "./Map/EditMap";
-export { default as LocationActivator } from "./Map/LocationActivator";

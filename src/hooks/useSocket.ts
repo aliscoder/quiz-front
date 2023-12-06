@@ -1,4 +1,3 @@
-import { EXPO_PUBLIC_API_URL } from "@utils";
 import { useEffect, useState } from "react";
 import io, { Socket } from "socket.io-client";
 
@@ -7,7 +6,7 @@ const useSocket = () => {
 
   useEffect(() => {
     //@ts-ignore
-    const newSocket = io(EXPO_PUBLIC_API_URL);
+    const newSocket = io(process.env.EXPO_PUBLIC_API_URL);
     setSocket(newSocket);
     return () => {
       newSocket.disconnect();

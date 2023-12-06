@@ -1,10 +1,9 @@
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useGetUserNotifsQuery } from "@state/api/notif";
 import { Box, Icon, Text, View } from "native-base";
 import { IViewProps } from "native-base/lib/typescript/components/basic/View/types";
 import React from "react";
-import { useAuth, useBarberNavigator } from "../../hooks";
+import { useAuth } from "../../hooks";
 import Badge from "../Badge/Badge";
 import { Error, Loading } from "../List/List";
 import { Row, RowBetween } from "../Row/Row";
@@ -32,23 +31,19 @@ const Header: React.FC<Partial<ContainerProps>> = ({
   headerTitle,
 }) => {
   const { goBack, canGoBack, navigate } = useNavigation();
-  const { navigateToNotification } = useBarberNavigator();
   const route = useRoute();
-
   const { user } = useAuth();
-  const { data: notifs } = useGetUserNotifsQuery(user._id);
-
-  const unreadNotifCount = notifs
-    ? notifs?.filter(
-        (notif) => notif.recievers.find((reciever) => reciever.userId === user._id)?.seen
-      ).length
-    : 0;
 
   return (
     <RowBetween height={12} px={4} my={2}>
       {canGoBack() && route.name !== "Home" && !headerLeftElement ? (
         <Touch onPress={goBack}>
-          <Icon size="lg" name="arrow-left" as={SimpleLineIcons} color="text.muted" />
+          <Icon
+            size="lg"
+            name="arrow-left"
+            as={SimpleLineIcons}
+            color="text.muted"
+          />
         </Touch>
       ) : (
         headerLeftElement
@@ -59,17 +54,7 @@ const Header: React.FC<Partial<ContainerProps>> = ({
             {headerTitle}
           </Text>
         ) : (
-          headerRightElement || (
-            <Row space={3}>
-              {rightIconComponent}
-              <Touch onPress={navigateToNotification}>
-                <View position="relative">
-                  {unreadNotifCount > 0 && <Badge sum={unreadNotifCount} />}
-                  <Icon as={SimpleLineIcons} name="bell" size="lg" color="text.muted" />
-                </View>
-              </Touch>
-            </Row>
-          )
+          headerRightElement || <Row space={3}>{rightIconComponent}</Row>
         )}
       </Row>
     </RowBetween>
@@ -93,11 +78,13 @@ const Container: React.FC<ContainerProps> = ({
 }) => {
   const { user } = useAuth();
 
-  const { navigate } = useNavigation();
-  const route = useRoute();
-
   return (
-    <Box background="primary" pb={bottomPadded ? 20 : 0} safeArea={isInSafeArea} flex={1}>
+    <Box
+      background="primary"
+      pb={bottomPadded ? 20 : 0}
+      safeArea={isInSafeArea}
+      flex={1}
+    >
       {user &&
         hasHeader &&
         (headerComponent ? (
