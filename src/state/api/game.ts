@@ -14,6 +14,16 @@ const clientApi = Api.injectEndpoints({
     }),
 
     /*
+    GET SPECIFIC GAME
+    */
+    getGame: builder.query<GameInterface, string>({
+      query: (gameId) => ({
+        url: `/games/${gameId}`,
+        method: "GET",
+      }),
+    }),
+
+    /*
     UPDATE USER PROFILE
     */
     updateProfile: builder.mutation<any, any>({
@@ -26,6 +36,10 @@ const clientApi = Api.injectEndpoints({
   }),
 });
 
-export const { useUpdateProfileMutation, useGetAllGamesQuery } = clientApi;
+export const {
+  useUpdateProfileMutation,
+  useGetAllGamesQuery,
+  useGetGameQuery,
+} = clientApi;
 
 export default clientApi;

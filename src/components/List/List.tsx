@@ -5,7 +5,11 @@ import { Box, Center, FlatList, Icon } from "native-base";
 import { IFlatListProps } from "native-base/lib/typescript/components/basic/FlatList";
 import React from "react";
 import { Platform, RefreshControl } from "react-native";
-import { EmptyListAnimation, LoadingAnimation, NetErrorAnimation } from "../../assets/animations";
+import {
+  EmptyListAnimation,
+  LoadingAnimation,
+  NetErrorAnimation,
+} from "../../assets/animations";
 import Animation from "../Animation/Animation";
 import { Column, ColumnCentered } from "../Column/Column";
 import { TextNormal } from "../Text/Text";
@@ -32,14 +36,10 @@ const Seperator = () => {
 export const Empty = () => {
   return (
     <Center flex={1}>
-      {Platform.OS === "web" ? (
+      <Column space={1} alignItems="center">
+        <Animation size={130} name={EmptyListAnimation} />
         <TextNormal>موردی یافت نشد</TextNormal>
-      ) : (
-        <Column space={1} alignItems="center">
-          <Animation size={90} name={EmptyListAnimation} />
-          <TextNormal>موردی یافت نشد</TextNormal>
-        </Column>
-      )}
+      </Column>
     </Center>
   );
 };
@@ -47,11 +47,7 @@ export const Empty = () => {
 export const Loading = () => {
   return (
     <Center flex={1}>
-      {Platform.OS === "web" ? (
-        <TextNormal>در حال بارگزاری ... </TextNormal>
-      ) : (
-        <Animation size={120} name={LoadingAnimation} />
-      )}
+      <Animation size={130} name={LoadingAnimation} />
     </Center>
   );
 };
@@ -60,7 +56,9 @@ export const Error = ({ onRefresh }: { onRefresh?: () => void }) => {
   return (
     <Center flex={1}>
       <ColumnCentered space={2}>
-        {Platform.OS !== "web" && <Animation size={120} name={NetErrorAnimation} />}
+        {Platform.OS !== "web" && (
+          <Animation size={120} name={NetErrorAnimation} />
+        )}
         <TextNormal>خطا در برقراری ارتباط</TextNormal>
         {onRefresh && (
           <Touch onPress={onRefresh}>
@@ -91,14 +89,22 @@ function List<N>({
   ) : isError ? (
     <Error onRefresh={refreshData} />
   ) : Platform.OS === "web" ? (
-    <FlatList ItemSeparatorComponent={hasSeperator ? Seperator : null} data={data} {...rest} />
+    <FlatList
+      ItemSeparatorComponent={hasSeperator ? Seperator : null}
+      data={data}
+      {...rest}
+    />
   ) : isPerformant ? (
     <FlashList
       estimatedListSize={
-        space ? { width: DEVICE.width - 8 * space, height: DEVICE.height } : undefined
+        space
+          ? { width: DEVICE.width - 8 * space, height: DEVICE.height }
+          : undefined
       }
       refreshControl={
-        onRefetch ? <RefreshControl refreshing={isFetching} onRefresh={onRefetch} /> : undefined
+        onRefetch ? (
+          <RefreshControl refreshing={isFetching} onRefresh={onRefetch} />
+        ) : undefined
       }
       ItemSeparatorComponent={hasSeperator ? Seperator : null}
       showsVerticalScrollIndicator={false}
@@ -109,7 +115,9 @@ function List<N>({
   ) : (
     <FlatList
       refreshControl={
-        onRefetch ? <RefreshControl refreshing={isFetching} onRefresh={onRefetch} /> : undefined
+        onRefetch ? (
+          <RefreshControl refreshing={isFetching} onRefresh={onRefetch} />
+        ) : undefined
       }
       ItemSeparatorComponent={hasSeperator ? Seperator : null}
       showsVerticalScrollIndicator={false}

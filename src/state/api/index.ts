@@ -3,9 +3,12 @@ import { getItemAsync } from "expo-secure-store";
 import { Platform } from "react-native";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.EXPO_PUBLIC_API_URL,
+  baseUrl: "https://quiz.iran.liara.run",
   prepareHeaders: async (headers) => {
-    let token = Platform.OS === "web" ? localStorage.getItem("token") : await getItemAsync("token");
+    let token =
+      Platform.OS === "web"
+        ? localStorage.getItem("token")
+        : await getItemAsync("token");
     if (token) {
       headers.set("Authorization", token);
     }

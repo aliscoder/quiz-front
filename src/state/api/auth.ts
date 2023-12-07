@@ -33,7 +33,10 @@ const authApi = Api.injectEndpoints({
     SEND VERIFICATION CODE
     */
 
-    checkPhoneExistance: builder.mutation<{ status: "registered" | "new" }, { phone: string }>({
+    checkPhoneExistance: builder.mutation<
+      { status: "register" | "login" },
+      { phone: string }
+    >({
       query: (body) => ({
         url: "/auth/send_code",
         method: "POST",

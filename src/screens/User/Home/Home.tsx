@@ -1,12 +1,12 @@
-import { List } from "@components";
-import { usePlatform } from "@hooks";
+import { Container, List } from "@components";
+import { useAuth, usePlatform } from "@hooks";
 import { HomeGameTopTabOptions } from "@navigation/utils/options";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useGetAllGamesQuery } from "@state/api/game";
 import { Box } from "native-base";
 import React from "react";
 import { Dimensions } from "react-native";
-import QuizEntranceCard from "../Components/QuizEntranceCard";
+import GameCard from "../Components/GameCard";
 
 const HomeTopTab = createMaterialTopTabNavigator();
 
@@ -14,7 +14,7 @@ const AllGames = () => {
   const { data: games, isLoading, isError } = useGetAllGamesQuery(undefined);
   return (
     <List
-      renderItem={({ item }) => <QuizEntranceCard game={item} />}
+      renderItem={({ item }) => <GameCard game={item} />}
       data={games}
       isLoading={isLoading}
       isError={isError}
@@ -24,10 +24,13 @@ const AllGames = () => {
 
 const MyGames = () => {
   const { data: games, isLoading, isError } = useGetAllGamesQuery(undefined);
+  const { user } = useAuth();
   return (
     <List
-      renderItem={({ item }) => <QuizEntranceCard game={item} />}
-      data={games}
+      renderItem={({ item }) => <GameCard game={item} />}
+      data={games?.filter((game) =>
+        game.players.map((item) => item._id).includes(user._id)
+      )}
       isLoading={isLoading}
       isError={isError}
     />
@@ -35,10 +38,8 @@ const MyGames = () => {
 };
 
 const Home = () => {
-  const { isIOS } = usePlatform();
-
   return (
-    <Box flex={1} safeAreaTop={!isIOS && 0}>
+    <Container>
       <HomeTopTab.Navigator
         initialLayout={{ width: Dimensions.get("window").width }}
         initialRouteName="All"
@@ -55,7 +56,7 @@ const Home = () => {
           component={MyGames}
         />
       </HomeTopTab.Navigator>
-    </Box>
+    </Container>
   );
 };
 

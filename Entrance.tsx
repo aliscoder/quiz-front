@@ -5,7 +5,7 @@ import { Box, Center, NativeBaseProvider, StatusBar, View } from "native-base";
 import React, { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
 import FlashMessage from "react-native-flash-message";
-import { useAuth, useShop } from "./src/hooks";
+import { useAuth } from "./src/hooks";
 import AppNavigator from "./src/navigation/AppNavigator";
 
 const Entrance = () => {
@@ -35,7 +35,11 @@ const Entrance = () => {
     <NativeBaseProvider theme={theme}>
       {!isAppReady ? null : (
         <>
-          <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
+          <StatusBar
+            translucent
+            backgroundColor="transparent"
+            barStyle="light-content"
+          />
           <FlashMessage position="top" statusBarHeight={5} />
           <Box flex={1} background="primary" onLayout={onLayoutRootView}>
             <NavigationContainer theme={MyTheme}>

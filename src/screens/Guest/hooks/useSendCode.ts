@@ -19,7 +19,9 @@ const useSendCode = () => {
   }, []);
 
   function handleSendCode() {
-    const regex = RegExp("09(0[1-9]|1[0-9]|3[0-9]|2[1-9]|9[0-9])-?[0-9]{3}-?[0-9]{4}");
+    const regex = RegExp(
+      "09(0[1-9]|1[0-9]|3[0-9]|2[1-9]|9[0-9])-?[0-9]{3}-?[0-9]{4}"
+    );
     if (!regex.test(phone) || phone.trim().length !== 11) {
       showError("شماره موبایل نامعتبر است");
     } else {
@@ -33,10 +35,10 @@ const useSendCode = () => {
       showError(error.data.error || "خطا در برقراری ارتباط");
     }
     if (isSuccess && data) {
-      if (data.status === "registered") {
+      if (data.status === "login") {
         navigate("Login", { phone });
       }
-      if (data.status === "new") {
+      if (data.status === "register") {
         navigate("Register", { phone });
       }
     }

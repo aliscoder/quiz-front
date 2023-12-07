@@ -11,8 +11,12 @@ export type GuestStackParamList = {
   };
 };
 
-export type GuestScreenNavigationProp = NativeStackNavigationProp<GuestStackParamList>;
-export type RegisterScreenRouteProp = RouteProp<GuestStackParamList, "Register">;
+export type GuestScreenNavigationProp =
+  NativeStackNavigationProp<GuestStackParamList>;
+export type RegisterScreenRouteProp = RouteProp<
+  GuestStackParamList,
+  "Register"
+>;
 export type LoginScreenRouteProp = RouteProp<GuestStackParamList, "Login">;
 
 export type UserBottomTabParamList = {
@@ -22,12 +26,14 @@ export type UserBottomTabParamList = {
 
 export type UserStackParamList = {
   Main: UserBottomTabParamList;
-  Quiz: {
-    quizId: string;
+  Game: {
+    gameId: string;
   };
 };
 
-export type UserScreenNavigationProp = NativeStackNavigationProp<UserStackParamList>;
-export type UserBottomTabNavigationProp = NativeStackNavigationProp<UserBottomTabParamList>;
-export type QuizRouteProp = RouteProp<UserStackParamList, "Quiz">;
+export type UserScreenNavigationProp =
+  NativeStackNavigationProp<UserStackParamList>;
+export type UserBottomTabNavigationProp =
+  NativeStackNavigationProp<UserBottomTabParamList>;
+export type GameRouteProp = RouteProp<UserStackParamList, "Game">;
 export type UserBottomTabRouteProp = RouteProp<UserBottomTabParamList>;

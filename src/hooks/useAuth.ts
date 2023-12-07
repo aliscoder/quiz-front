@@ -4,7 +4,7 @@ import { authSelector } from "@state/selectors/authSelector";
 import { deleteItem, getItem, setItem } from "@utils";
 import jwtDecode from "jwt-decode";
 import { useCallback, useEffect } from "react";
-import { AuthReturnType, DecodedTokenType } from "../types";
+import { AuthReturnType, DecodedTokenType, UserInterface } from "../types";
 import { useAppDispatch } from "./useAppDispatch";
 import { useAppSelector } from "./useAppSelector";
 
@@ -57,6 +57,6 @@ export default function useAuth() {
     logout,
     checkInitailAuth,
     authenticate,
-    user,
+    user: user as UserInterface,
   };
 }
