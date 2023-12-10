@@ -13,9 +13,9 @@ const GameProvider = () => {
   const socket = io("https://quiz.iran.liara.run");
 
   useEffect(() => {
-    socket.emit("join-room", { room: gameId });
+    socket.emit("join-game", { game: gameId });
     return () => {
-      socket.emit("leave-room", { room: gameId });
+      socket.emit("leave-game", { game: gameId });
       socket.disconnect();
     };
   }, [socket]);

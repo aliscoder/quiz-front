@@ -2,7 +2,7 @@ export interface UserInterface {
   _id: string;
   phone: string;
   point: number;
-  avatar: string;
+  avatar: { _id: string; url: string };
   username: string;
   coin: number;
 }

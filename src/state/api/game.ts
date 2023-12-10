@@ -26,9 +26,12 @@ const clientApi = Api.injectEndpoints({
     /*
     UPDATE USER PROFILE
     */
-    updateProfile: builder.mutation<any, any>({
+    registerUserInGame: builder.mutation<
+      { game: GameInterface; user: UserInterface },
+      { gameId: string; userId: string }
+    >({
       query: (body) => ({
-        url: "/client/profile/update",
+        url: "/games/register_game",
         method: "POST",
         body,
       }),
@@ -37,7 +40,7 @@ const clientApi = Api.injectEndpoints({
 });
 
 export const {
-  useUpdateProfileMutation,
+  useRegisterUserInGameMutation,
   useGetAllGamesQuery,
   useGetGameQuery,
 } = clientApi;
