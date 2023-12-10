@@ -11,6 +11,7 @@ const clientApi = Api.injectEndpoints({
         url: `/games`,
         method: "GET",
       }),
+      // providesTags: ['Games']
     }),
 
     /*
@@ -35,6 +36,7 @@ const clientApi = Api.injectEndpoints({
         method: "POST",
         body,
       }),
+      // invalidatesTags: ['Games']
     }),
   }),
 });

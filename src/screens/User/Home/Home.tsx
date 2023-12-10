@@ -25,8 +25,7 @@ const GameList = ({
 }) => {
   const { user } = useAuth();
 
-  const [registerUser, { isLoading: registerloading, isError: registerError }] =
-    useRegisterUserInGameMutation();
+  
 
   return (
     <List
@@ -41,7 +40,7 @@ const GameList = ({
 const Home = () => {
   const { user } = useAuth();
   const { data, isError, isLoading } = useGetAllGamesQuery(undefined);
-  const { modalData, openModal, closeModal } = useModal();
+  
 
   return (
     <Container>
@@ -63,7 +62,7 @@ const Home = () => {
           component={() => (
             <GameList
               games={data?.filter((game) =>
-                game.players.map((item) => item._id).includes(user._id)
+                game.players.map((item) => item.user._id).includes(user._id)
               )}
               isLoading={isLoading}
               isError={isError}

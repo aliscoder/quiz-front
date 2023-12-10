@@ -1,4 +1,4 @@
-import { SimpleLineIcons } from "@expo/vector-icons";
+import { FontAwesome5, SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Box, Icon, View } from "native-base";
 import { IViewProps } from "native-base/lib/typescript/components/basic/View/types";
@@ -8,6 +8,9 @@ import { Row, RowBetween } from "../Row/Row";
 import Touch from "../Touch/Touch";
 import { Column } from "../Column/Column";
 import { TextNormal } from "../Text/Text";
+import Animation from "../Animation/Animation";
+import { CoinAnimation } from "../../../src/assets/animations";
+import Avatar from "../Avatar/Avatar";
 
 interface ContainerProps extends IViewProps {
   children?: React.ReactNode;
@@ -25,15 +28,24 @@ interface ContainerProps extends IViewProps {
 
 const MainHeader = () => {
   const { user } = useAuth();
+  const add =50000
+  const name ='alireza'
   return (
     <RowBetween height={12} px={4} my={2}>
       <Touch>
-        <TextNormal>خرید سکه</TextNormal>
+        <Row bg='light.500' borderRadius={15} pr={ 2} h={8} >
+          <Animation size={40} name={CoinAnimation} />
+          <TextNormal mt={1}>{add.toLocaleString()}</TextNormal>
+          <Icon ml="4" as={FontAwesome5} name="plus-square" size={15} color="#ffd862" />
+        </Row>
+        
+
       </Touch>
-      <Column>
-        <TextNormal>{user?.username}</TextNormal>
-        <TextNormal>{user?.coin}</TextNormal>
-      </Column>
+      <Row space={2}>
+        <TextNormal>{name}</TextNormal>
+        <Avatar uri={user?.avatar} size="sm" />
+        
+      </Row>
     </RowBetween>
   );
 };

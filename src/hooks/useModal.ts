@@ -9,8 +9,8 @@ const useModal = () => {
   }, [isOpen]);
 
   const openModal = useCallback(
-    (data: any) => {
-      setModalData(data);
+    () => {
+      // setModalData(data);
       setOpen(true);
     },
     [isOpen]

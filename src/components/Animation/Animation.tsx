@@ -15,6 +15,7 @@ const Animation: React.FC<Props> = ({ name, size = 250, centered = false, ...res
       <LottieView
         source={name}
         autoPlay
+        loop
         style={{
           width: size,
           height: size,
@@ -25,7 +26,8 @@ const Animation: React.FC<Props> = ({ name, size = 250, centered = false, ...res
     <View {...rest}>
       <LottieView
         source={name}
-        autoPlay
+          autoPlay
+          loop
         style={{
           width: size,
           height: size,

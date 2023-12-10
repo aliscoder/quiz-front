@@ -10,7 +10,7 @@ const PlayersAvatarGroup = ({ players }: Props) => {
   return (
     <Avatar.Group
       _avatar={{
-        size: "md",
+        size: "sm",
         mx: 1,
         borderWidth: 1,
         borderColor: "border.sharp",

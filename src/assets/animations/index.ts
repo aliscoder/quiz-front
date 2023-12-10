@@ -3,6 +3,7 @@
 export const LoadingAnimation = require("./loading.json");
 export const EmptyListAnimation = require("./empty.json");
 export const NetErrorAnimation = require("./netError.json");
+export const CoinAnimation = require("./coin.json");
 
 // export const Loading = () => <ListAnimation name={LoadingAnimation} />;
 // export const ListEmpty = () => <ListAnimation full title="لیست خالی است" name={EmptyListAnimation} />;
