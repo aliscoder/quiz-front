@@ -9,9 +9,8 @@ import { Text } from "native-base";
 const Game = ({ id }: { id: string }) => {
   const { data: game, isLoading, isError } = useGetGameQuery(id);
   const socket = useGameSocket();
-  const { navigate } = useNavigation();
 
-  const dispatch = useAppDispatch();
+  console.log(game);
 
   // const handleConfirm = () => {
   //   if (appointment && selectedStatus) {

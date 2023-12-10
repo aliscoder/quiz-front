@@ -6,28 +6,25 @@ import Button from "../Button/Button";
 import Modal from "./Modal";
 import { Column } from "../Column/Column";
 import { Row } from "../Row/Row";
+import { TextTitle } from "../Text/Text";
+import { useModal } from "@hooks";
 
 type Props = {
-  isOpen: boolean;
   onReject: () => void;
   onConfirm: () => void;
-  onClose: () => void;
-  children: React.ReactNode;
+  title: string;
 };
-const ConfirmationModal: React.FC<Props> = ({ isOpen, onReject, onConfirm, onClose, children }) => {
+const ConfirmationModal: React.FC<Props> = ({ onReject, onConfirm, title }) => {
+  const { isOpen, closeModal } = useModal();
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isSheet>
+    <Modal isOpen={isOpen} onClose={closeModal} isSheet>
       <Column space={4} px={6} alignItems="center" pt={3}>
-        <Icon as={AntDesign} name="warning" size="4xl" color="warning" />
+        <TextTitle>{title}</TextTitle>
 
-        {children}
-
-        {/* <Center my={3}> */}
         <Row w="full" space={5} justifyContent="center">
           <Button size="1/2" title="لغو" onPress={onReject} scheme="danger" />
           <Button size="1/2" title="بله" onPress={onConfirm} scheme="success" />
         </Row>
-        {/* </Center> */}
       </Column>
     </Modal>
   );

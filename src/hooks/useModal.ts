@@ -2,25 +2,21 @@ import { useCallback, useState } from "react";
 
 const useModal = () => {
   const [isOpen, setOpen] = useState(false);
-  const [modalImage, setModalImage] = useState("");
+  const [modalData, setModalData] = useState();
 
   const closeModal = useCallback(() => {
     setOpen(false);
   }, [isOpen]);
 
-  const openModal = useCallback(() => {
-    setOpen(true);
-  }, [isOpen]);
-
-  const showFullImage = useCallback(
-    (uri: string) => {
-      setModalImage(uri);
-      openModal();
+  const openModal = useCallback(
+    (data: any) => {
+      setModalData(data);
+      setOpen(true);
     },
-    [modalImage]
+    [isOpen]
   );
 
-  return { isOpen, openModal, closeModal, showFullImage, modalImage };
+  return { isOpen, openModal, closeModal, modalData };
 };
 
 export default useModal;

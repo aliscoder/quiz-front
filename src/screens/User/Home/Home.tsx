@@ -1,17 +1,33 @@
-import { Container, List } from "@components";
-import { useAuth, usePlatform } from "@hooks";
+import { ConfirmationModal, Container, List, TextTitle } from "@components";
+import { useAuth, useModal, usePlatform } from "@hooks";
 import { HomeGameTopTabOptions } from "@navigation/utils/options";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { useGetAllGamesQuery } from "@state/api/game";
+import {
+  useGetAllGamesQuery,
+  useRegisterUserInGameMutation,
+} from "@state/api/game";
 import { Box } from "native-base";
 import React from "react";
 import { Dimensions } from "react-native";
 import GameCard from "../Components/GameCard";
+import { GameInterface } from "@types";
 
 const HomeTopTab = createMaterialTopTabNavigator();
 
-const AllGames = () => {
-  const { data: games, isLoading, isError } = useGetAllGamesQuery(undefined);
+const GameList = ({
+  games,
+  isLoading,
+  isError,
+}: {
+  games: GameInterface[] | undefined;
+  isLoading: boolean;
+  isError: boolean;
+}) => {
+  const { user } = useAuth();
+
+  const [registerUser, { isLoading: registerloading, isError: registerError }] =
+    useRegisterUserInGameMutation();
+
   return (
     <List
       renderItem={({ item }) => <GameCard game={item} />}
@@ -22,22 +38,11 @@ const AllGames = () => {
   );
 };
 
-const MyGames = () => {
-  const { data: games, isLoading, isError } = useGetAllGamesQuery(undefined);
-  const { user } = useAuth();
-  return (
-    <List
-      renderItem={({ item }) => <GameCard game={item} />}
-      data={games?.filter((game) =>
-        game.players.map((item) => item._id).includes(user._id)
-      )}
-      isLoading={isLoading}
-      isError={isError}
-    />
-  );
-};
-
 const Home = () => {
+  const { user } = useAuth();
+  const { data, isError, isLoading } = useGetAllGamesQuery(undefined);
+  const { modalData, openModal, closeModal } = useModal();
+
   return (
     <Container>
       <HomeTopTab.Navigator
@@ -48,12 +53,22 @@ const Home = () => {
         <HomeTopTab.Screen
           name="All"
           options={{ title: "همه مسابقه ها" }}
-          component={AllGames}
+          component={() => (
+            <GameList games={data} isLoading={isLoading} isError={isError} />
+          )}
         />
         <HomeTopTab.Screen
           options={{ title: "مسابقه های من" }}
           name="Mine"
-          component={MyGames}
+          component={() => (
+            <GameList
+              games={data?.filter((game) =>
+                game.players.map((item) => item._id).includes(user._id)
+              )}
+              isLoading={isLoading}
+              isError={isError}
+            />
+          )}
         />
       </HomeTopTab.Navigator>
     </Container>
