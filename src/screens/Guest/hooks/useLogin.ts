@@ -25,7 +25,7 @@ const useLogin = () => {
   }, []);
 
   async function handleLogin() {
-    if (!formData.password || formData.password.length < 5) {
+    if (!formData.password || formData.password.length < 2) {
       showError("کلمه عبور باید بیشتر از 5 حرف باشد");
     } else {
       login({ phone, password, enteredCode });
