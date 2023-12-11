@@ -11,7 +11,7 @@ const clientApi = Api.injectEndpoints({
         url: `/games`,
         method: "GET",
       }),
-      // providesTags: ['Games']
+      providesTags: ["Games"],
     }),
 
     /*
@@ -22,6 +22,21 @@ const clientApi = Api.injectEndpoints({
         url: `/games/${gameId}`,
         method: "GET",
       }),
+    }),
+
+    /*
+    ANSWER QUESTION
+    */
+    answerQuestion: builder.mutation<
+      any,
+      { gameId: string; playerId: string; qId?: string; answer?: number }
+    >({
+      query: (body) => ({
+        url: `/games/answer/${body.gameId}`,
+        method: "POST",
+        body,
+      }),
+      // invalidatesTags: ["Games"],
     }),
 
     /*
@@ -36,7 +51,7 @@ const clientApi = Api.injectEndpoints({
         method: "POST",
         body,
       }),
-      // invalidatesTags: ['Games']
+      invalidatesTags: ["Games"],
     }),
   }),
 });
@@ -45,6 +60,7 @@ export const {
   useRegisterUserInGameMutation,
   useGetAllGamesQuery,
   useGetGameQuery,
+  useAnswerQuestionMutation,
 } = clientApi;
 
 export default clientApi;

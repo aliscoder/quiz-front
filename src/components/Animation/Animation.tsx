@@ -7,15 +7,22 @@ interface Props extends IViewProps {
   name: string;
   size?: number;
   centered?: boolean;
+  loop?: boolean;
 }
 
-const Animation: React.FC<Props> = ({ name, size = 250, centered = false, ...rest }) => {
+const Animation: React.FC<Props> = ({
+  name,
+  size = 250,
+  centered = false,
+  loop = true,
+  ...rest
+}) => {
   return centered ? (
     <Center height="100%">
       <LottieView
         source={name}
         autoPlay
-        loop
+        loop={loop}
         style={{
           width: size,
           height: size,
@@ -26,8 +33,8 @@ const Animation: React.FC<Props> = ({ name, size = 250, centered = false, ...res
     <View {...rest}>
       <LottieView
         source={name}
-          autoPlay
-          loop
+        autoPlay
+        loop={loop}
         style={{
           width: size,
           height: size,

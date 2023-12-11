@@ -7,26 +7,15 @@ import {
   useRegisterUserInGameMutation,
 } from "@state/api/game";
 import { Box } from "native-base";
-import React from "react";
+import React, { memo, useCallback } from "react";
 import { Dimensions } from "react-native";
 import GameCard from "../Components/GameCard";
 import { GameInterface } from "@types";
 
 const HomeTopTab = createMaterialTopTabNavigator();
 
-const GameList = ({
-  games,
-  isLoading,
-  isError,
-}: {
-  games: GameInterface[] | undefined;
-  isLoading: boolean;
-  isError: boolean;
-}) => {
-  const { user } = useAuth();
-
-  
-
+const AllGames = () => {
+  const { data: games, isError, isLoading } = useGetAllGamesQuery(undefined);
   return (
     <List
       renderItem={({ item }) => <GameCard game={item} />}
@@ -37,10 +26,23 @@ const GameList = ({
   );
 };
 
+const MyGames = () => {
+  const { data: games, isError, isLoading } = useGetAllGamesQuery(undefined);
+  const { user } = useAuth();
+  return (
+    <List
+      renderItem={({ item }) => <GameCard game={item} />}
+      data={games?.filter((game) =>
+        game.players.map((item) => item.user._id).includes(user._id)
+      )}
+      isLoading={isLoading}
+      isError={isError}
+    />
+  );
+};
+
 const Home = () => {
   const { user } = useAuth();
-  const { data, isError, isLoading } = useGetAllGamesQuery(undefined);
-  
 
   return (
     <Container>
@@ -52,22 +54,12 @@ const Home = () => {
         <HomeTopTab.Screen
           name="All"
           options={{ title: "همه مسابقه ها" }}
-          component={() => (
-            <GameList games={data} isLoading={isLoading} isError={isError} />
-          )}
+          component={AllGames}
         />
         <HomeTopTab.Screen
           options={{ title: "مسابقه های من" }}
           name="Mine"
-          component={() => (
-            <GameList
-              games={data?.filter((game) =>
-                game.players.map((item) => item.user._id).includes(user._id)
-              )}
-              isLoading={isLoading}
-              isError={isError}
-            />
-          )}
+          component={MyGames}
         />
       </HomeTopTab.Navigator>
     </Container>

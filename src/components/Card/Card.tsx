@@ -12,7 +12,7 @@ interface CardProps extends IViewProps {
   showTitle?: boolean;
   header?: React.ReactNode;
   subtitle?: string;
-  bgColor?: ColorType;
+  bgColor?: string;
   transparent?: boolean;
   leftTitleElement?: React.ReactNode;
   shadowed?: boolean;
@@ -35,7 +35,11 @@ const Card: React.FC<CardProps> = ({
     <View
       style={{
         ...styles.card,
-        backgroundColor: transparent ? "transparent" : theme.colors.card.background,
+        backgroundColor: bgColor
+          ? bgColor
+          : transparent
+          ? "transparent"
+          : theme.colors.card.background,
         shadowColor: theme.colors.card.shadow,
         borderRadius: 8,
         elevation: transparent ? 0 : shadowed ? 4 : 0,
@@ -47,8 +51,20 @@ const Card: React.FC<CardProps> = ({
               height: Platform.OS === "web" ? 5 : 0,
             }
           : undefined,
-        shadowOpacity: transparent ? 0 : shadowed ? (Platform.OS === "web" ? 0.2 : 0) : 0,
-        shadowRadius: transparent ? 0 : shadowed ? (Platform.OS === "web" ? 15 : 0) : 0,
+        shadowOpacity: transparent
+          ? 0
+          : shadowed
+          ? Platform.OS === "web"
+            ? 0.2
+            : 0
+          : 0,
+        shadowRadius: transparent
+          ? 0
+          : shadowed
+          ? Platform.OS === "web"
+            ? 15
+            : 0
+          : 0,
       }}
       {...rest}
     >
@@ -75,7 +91,12 @@ const Card: React.FC<CardProps> = ({
         </>
       )}
       {subtitle && (
-        <Text textAlign={centerTitle ? "center" : "right"} color="text.main" fontSize="sm" mb={5}>
+        <Text
+          textAlign={centerTitle ? "center" : "right"}
+          color="text.main"
+          fontSize="sm"
+          mb={5}
+        >
           {subtitle}
         </Text>
       )}
