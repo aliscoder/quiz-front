@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeBottomTabOprions } from "./utils/options";
 import Home from "@screens/User/Home/Home";
 import { UserBottomTabParamList, UserStackParamList } from "./utils/types";
-import GameProvider from "@screens/User/Game/GameProvider";
+import Game from "@screens/User/Game/Game";
 
 const Test = () => {
   return <></>;
@@ -28,7 +28,7 @@ const UserNavigator = () => {
   return (
     <UserStack.Navigator screenOptions={{ headerShown: false }}>
       <UserStack.Screen name="Main" component={BottomTabStack} />
-      <UserStack.Screen name="Game" component={GameProvider} />
+      <UserStack.Screen name="Game" component={Game} />
     </UserStack.Navigator>
   );
 };

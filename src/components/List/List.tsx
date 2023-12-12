@@ -92,6 +92,7 @@ function List<N>({
     <FlatList
       ItemSeparatorComponent={hasSeperator ? Seperator : null}
       data={data}
+      showsVerticalScrollIndicator={false}
       {...rest}
     />
   ) : isPerformant ? (

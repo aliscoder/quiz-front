@@ -1,4 +1,4 @@
-import { GameInterface, UserInterface } from "@types";
+import { GameInterface, PlayerInterface, UserInterface } from "@types";
 import Api from ".";
 
 const clientApi = Api.injectEndpoints({
@@ -25,6 +25,16 @@ const clientApi = Api.injectEndpoints({
     }),
 
     /*
+    GET GAME PLAYERS
+    */
+    getGamePlayers: builder.query<PlayerInterface[], string>({
+      query: (gameId) => ({
+        url: `/games/${gameId}/players`,
+        method: "GET",
+      }),
+    }),
+
+    /*
     ANSWER QUESTION
     */
     answerQuestion: builder.mutation<
@@ -32,7 +42,7 @@ const clientApi = Api.injectEndpoints({
       { gameId: string; playerId: string; qId?: string; answer?: number }
     >({
       query: (body) => ({
-        url: `/games/answer/${body.gameId}`,
+        url: `/games/${body.gameId}/answer`,
         method: "POST",
         body,
       }),
@@ -60,6 +70,7 @@ export const {
   useRegisterUserInGameMutation,
   useGetAllGamesQuery,
   useGetGameQuery,
+  useGetGamePlayersQuery,
   useAnswerQuestionMutation,
 } = clientApi;
 

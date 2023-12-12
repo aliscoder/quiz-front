@@ -1,16 +1,11 @@
-import { ConfirmationModal, Container, List, TextTitle } from "@components";
-import { useAuth, useModal, usePlatform } from "@hooks";
+import { Container, List } from "@components";
+import { useAuth } from "@hooks";
 import { HomeGameTopTabOptions } from "@navigation/utils/options";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import {
-  useGetAllGamesQuery,
-  useRegisterUserInGameMutation,
-} from "@state/api/game";
-import { Box } from "native-base";
-import React, { memo, useCallback } from "react";
+import { useGetAllGamesQuery } from "@state/api/game";
+import React from "react";
 import { Dimensions } from "react-native";
 import GameCard from "../Components/GameCard";
-import { GameInterface } from "@types";
 
 const HomeTopTab = createMaterialTopTabNavigator();
 
@@ -42,8 +37,6 @@ const MyGames = () => {
 };
 
 const Home = () => {
-  const { user } = useAuth();
-
   return (
     <Container>
       <HomeTopTab.Navigator

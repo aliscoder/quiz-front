@@ -23,12 +23,11 @@ import {
   Center,
   Text,
   View,
-  useToast,
 } from "native-base";
 import React, { useEffect, useRef, useState } from "react";
 import AvatarGroup from "./PlayersAvatarGroup";
 import PlayersAvatarGroup from "./PlayersAvatarGroup";
-import { useAuth, useModal } from "@hooks";
+import { useAuth, useModal, useToast } from "@hooks";
 import { HStack } from "native-base";
 import { useRegisterUserInGameMutation } from "@state/api/game";
 
@@ -40,12 +39,17 @@ const QuizEntranceCard = ({ game }: Props) => {
   const { navigate } = useNavigation<UserScreenNavigationProp>();
   const [
     registerUser,
-    { isLoading: registerloading, isError: registerError, isSuccess },
+    {
+      isLoading: registerloading,
+      isError: registerError,
+      isSuccess: registerSuccess,
+      error,
+    },
   ] = useRegisterUserInGameMutation();
   const { user } = useAuth();
   const cancelRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const toast = useToast();
+  const { showError } = useToast();
 
   function checkUserRegisteration() {
     if (game.players.map((player) => player.user._id).includes(user._id)) {
@@ -55,27 +59,25 @@ const QuizEntranceCard = ({ game }: Props) => {
     }
   }
 
-  //   useEffect(() => {
-  //     if (isSuccess) {
-  //       toast.show({
-  //       placement: "top",
-  //       size:"lg",
-  //   render: () => {
-  //       return <Box bg="emerald.500" px="4"  fontSize="md" py="4"  rounded="md" mb={8}>
-  //               ثبت نام با موفقیت انجام شد
-  //             </Box>;
-  //     }
-  // })
-  //     }
+  useEffect(() => {
+    if (registerSuccess) {
+      setIsOpen(false);
+      navigate("Game", { gameId: game._id });
+    }
+    if (registerError) {
+      setIsOpen(false);
+      //@ts-ignore
+      showError(error.data.error);
+    }
+  }, [registerError, registerSuccess]);
 
-  //   }, [isSuccess])
   return (
     <>
       <Touch onPress={checkUserRegisteration}>
         <Card
           bgColor={
             game.players.map((player) => player.user._id).includes(user._id)
-              ? "#245a8f"
+              ? "selected"
               : undefined
           }
         >
@@ -163,8 +165,6 @@ const QuizEntranceCard = ({ game }: Props) => {
                   //   point: 0,
                   //   user: { _id: user._id },
                   // });
-                  setIsOpen(false);
-                  navigate("Game", { gameId: game._id });
                 }}
               >
                 تایید

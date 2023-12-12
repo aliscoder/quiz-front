@@ -28,23 +28,14 @@ interface ContainerProps extends IViewProps {
 
 const MainHeader = () => {
   const { user } = useAuth();
-  console.log(user);
-  const add = 50000;
-  const name = "alireza";
+
   return (
     <Column>
-      <RowBetween
-        mx={2}
-        borderRadius={5}
-        height={12}
-        px={4}
-        my={2}
-        bg="#245a8f"
-      >
+      <RowBetween mx={2} borderRadius={5} height={12} px={4} my={2} bg="info">
         <Touch>
           <Row bg="light.500" borderRadius={15} pr={2} h={8}>
             <Animation size={40} name={CoinAnimation} />
-            <TextNormal mt={1}>{add.toLocaleString()}</TextNormal>
+            <TextNormal mt={1}>{user.coin.toLocaleString()}</TextNormal>
             <Icon
               ml="4"
               as={FontAwesome5}
@@ -55,8 +46,8 @@ const MainHeader = () => {
           </Row>
         </Touch>
         <Row space={2}>
-          <TextNormal>{name}</TextNormal>
-          <Avatar uri={user?.avatar.url} size="sm" />
+          <TextNormal>{user.username}</TextNormal>
+          <Avatar uri={user?.avatar?.url} size="sm" />
         </Row>
       </RowBetween>
       <View>{/* BANNER */}</View>
