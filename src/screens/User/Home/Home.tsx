@@ -5,12 +5,12 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { useGetAllGamesQuery } from "@state/api/game";
 import React, { useEffect, useState } from "react";
 import { Dimensions } from "react-native";
+import { Box, useToast } from 'native-base';
 import GameCard from "../Components/GameCard";
 import moment from "jalali-moment";
-import { Center, Spinner } from "native-base";
+import { Button, Center, Spinner } from "native-base";
 
 const HomeTopTab = createMaterialTopTabNavigator();
-
 const AllGames = () => {
   const { data: games, isError, isLoading } = useGetAllGamesQuery(undefined);
   return (
@@ -23,19 +23,46 @@ const AllGames = () => {
   );
 };
 
+
+
 const MyGames = () => {
+const toast = useToast();
+
   const { data: games, isError, isLoading } = useGetAllGamesQuery(undefined);
   const { user } = useAuth();
+  let data=games?.filter((game) =>game.players.map((item) => item.user._id).includes(user._id))
+
+  data?.map((e) => {
+        if (e.status == "before") {
+    let timer = e.startTime - e.nowTime;
+    const timeStart = setInterval(() => {
+      if (timer > 0) {
+        timer -= 3;
+      } else {
+        toast.show({
+          render: () => {
+            return <Box bg="emerald.500" px="2" py="1" rounded="sm" mb={5}>
+                    عجله کن ، مسابقه شروع شد
+                  </Box>;
+          }
+        })
+        clearInterval(timeStart);
+      }
+    }, 3000)
+    }
+  }
+  )
+
+
   return (
     <List
       renderItem={({ item }) => <GameCard game={item} />}
-      data={games?.filter((game) =>
-        game.players.map((item) => item.user._id).includes(user._id)
-      )}
+      data={data}
       isLoading={isLoading}
       isError={isError}
     />
   );
+
 };
 
 const Home = () => {
