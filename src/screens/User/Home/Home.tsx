@@ -1,11 +1,13 @@
-import { Container, List } from "@components";
+import { Container, List, TextTitle } from "@components";
 import { useAuth } from "@hooks";
 import { HomeGameTopTabOptions } from "@navigation/utils/options";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { useGetAllGamesQuery } from "@state/api/game";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions } from "react-native";
 import GameCard from "../Components/GameCard";
+import moment from "jalali-moment";
+import { Center, Spinner } from "native-base";
 
 const HomeTopTab = createMaterialTopTabNavigator();
 
@@ -37,8 +39,34 @@ const MyGames = () => {
 };
 
 const Home = () => {
+  const { data: games, isLoading } = useGetAllGamesQuery(undefined);
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    if (games) {
+      setTime(games[0].nowTime);
+    }
+  }, [games]);
+
+  useEffect(() => {
+    let Timer = setInterval(() => {
+      setTime((prev) => prev + 1);
+    }, 1000);
+
+    () => {
+      clearInterval(Timer);
+    };
+  }, []);
+
   return (
     <Container>
+      <Center>
+        {isLoading ? (
+          <Spinner color="snow" size="sm" />
+        ) : (
+          <TextTitle>{moment.unix(time).format("H : mm : ss")}</TextTitle>
+        )}
+      </Center>
       <HomeTopTab.Navigator
         initialLayout={{ width: Dimensions.get("window").width }}
         initialRouteName="All"

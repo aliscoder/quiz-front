@@ -1,12 +1,7 @@
 import { Container, Error, Loading } from "@components";
-import { useAuth } from "@hooks";
 import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/core";
-import {
-  useAnswerQuestionMutation,
-  useGetGamePlayersQuery,
-  useGetGameQuery,
-} from "@state/api/game";
+import { useGetGamePlayersQuery, useGetGameQuery } from "@state/api/game";
 import { GameRouteProp } from "@navigation/utils/types";
 import GamePended from "./Components/GamePended";
 import GameStarted from "./Components/GameStarted";
@@ -23,14 +18,25 @@ const Game = () => {
 
   useEffect(() => {
     if (game) {
-      setStatus(game?.status);
-      let remainingTime = game.startTime - game.nowTime;
+      setStatus(game.status);
+      let remainingTime = 0;
+      if (game.status === "before") {
+        remainingTime = game.startTime - game.nowTime;
+      }
+      if (game.status === "start") {
+        remainingTime = game.endTime - game.nowTime;
+      }
       let Timer = setInterval(() => {
         if (remainingTime > 0) {
           remainingTime -= 1;
         } else {
           clearInterval(Timer);
-          setStatus("start");
+          if (game.status === "before") {
+            setStatus("start");
+          }
+          if (game.status === "start") {
+            setStatus("after");
+          }
         }
       }, 1000);
     }

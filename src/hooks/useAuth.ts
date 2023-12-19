@@ -14,7 +14,7 @@ export default function useAuth() {
   const [refreshToken, { data: updatedData, isSuccess: tokenRefreshed }] =
     useRefreshTokenMutation();
 
-  const checkInitailAuth = useCallback(async (callback: Function) => {
+  const checkInitailAuth = useCallback(async (callback?: Function) => {
     const token = await getItem("token");
     const decoded = token ? jwtDecode<DecodedTokenType>(token) : null;
     if (decoded) {
@@ -22,11 +22,15 @@ export default function useAuth() {
         if (data) {
           //@ts-ignore
           dispatch(loginUser(data.data.user));
-          callback();
+          if (callback) {
+            callback();
+          }
         }
       });
     } else {
-      callback();
+      if (callback) {
+        callback();
+      }
     }
   }, []);
 

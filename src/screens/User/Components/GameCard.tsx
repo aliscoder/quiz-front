@@ -30,6 +30,7 @@ import PlayersAvatarGroup from "./PlayersAvatarGroup";
 import { useAuth, useModal, useToast } from "@hooks";
 import { HStack } from "native-base";
 import { useRegisterUserInGameMutation } from "@state/api/game";
+import { useRefreshTokenMutation } from "@state/api/auth";
 
 type Props = {
   game: GameInterface;
@@ -46,7 +47,7 @@ const QuizEntranceCard = ({ game }: Props) => {
       error,
     },
   ] = useRegisterUserInGameMutation();
-  const { user } = useAuth();
+  const { user, checkInitailAuth } = useAuth();
   const cancelRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const { showError } = useToast();
@@ -61,6 +62,7 @@ const QuizEntranceCard = ({ game }: Props) => {
 
   useEffect(() => {
     if (registerSuccess) {
+      checkInitailAuth();
       setIsOpen(false);
       navigate("Game", { gameId: game._id });
     }

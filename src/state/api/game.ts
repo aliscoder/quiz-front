@@ -35,6 +35,21 @@ const clientApi = Api.injectEndpoints({
     }),
 
     /*
+    CHANGE GAME STATUS
+    */
+    changeGameStatus: builder.mutation<
+      any,
+      { gameId: string; playerId: string; status: "before" | "after" | "start" }
+    >({
+      query: (body) => ({
+        url: `/games/change_status`,
+        method: "POST",
+        body,
+      }),
+      // invalidatesTags: ["Games"],
+    }),
+
+    /*
     ANSWER QUESTION
     */
     answerQuestion: builder.mutation<
@@ -72,6 +87,7 @@ export const {
   useGetGameQuery,
   useGetGamePlayersQuery,
   useAnswerQuestionMutation,
+  useChangeGameStatusMutation,
 } = clientApi;
 
 export default clientApi;
