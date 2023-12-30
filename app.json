@@ -9,15 +9,15 @@
     "icon": "./assets/photos/Icon.png",
     "androidNavigationBar": {
       "barStyle": "light-content",
-      "backgroundColor": "#151515"
+      "backgroundColor": "#040303"
     },
     "androidStatusBar": {
       "barStyle": "light-content",
-      "backgroundColor": "#151515"
+      "backgroundColor": "#040303"
     },
     "splash": {
       "image": "./assets/photos/Logo.png",
-      "backgroundColor": "#151515"
+      "backgroundColor": "#040303"
     },
     "plugins": [
       [
@@ -29,7 +29,7 @@
     ],
     "updates": {
       "fallbackToCacheTimeout": 0,
-      "url": "https://u.expo.dev/061cac91-6b93-48f9-943f-802c2babf641"
+      "url": "https://u.expo.dev/e1a6c84f-b2fe-4b79-9faf-39634e4c8c78"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -66,7 +66,7 @@
     "extra": {
       "googleMapsApiKey": "AIzaSyDcdSYW2kGVmVsbpE6WHPT6dEWbbt7jGGc",
       "eas": {
-        "projectId": "061cac91-6b93-48f9-943f-802c2babf641"
+        "projectId": "e1a6c84f-b2fe-4b79-9faf-39634e4c8c78"
       }
     },
     "runtimeVersion": {

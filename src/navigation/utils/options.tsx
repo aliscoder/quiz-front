@@ -41,7 +41,7 @@ export const HomeGameTopTabOptions = () => {
     tabBarStyle: {
       backgroundColor: theme.colors.primary,
       shadowColor: "transparent",
-      paddingTop: StatusBar.currentHeight,
+      // paddingTop: StatusBar.currentHeight,
     },
     tabBarActiveTintColor: theme.colors.secondary,
     tabBarIndicatorStyle: {

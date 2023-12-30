@@ -3,6 +3,7 @@ import {
   Column,
   ConfirmationModal,
   Image,
+  Row,
   RowBetween,
   TextNormal,
   TextTitle,
@@ -28,9 +29,10 @@ import React, { useEffect, useRef, useState } from "react";
 import AvatarGroup from "./PlayersAvatarGroup";
 import PlayersAvatarGroup from "./PlayersAvatarGroup";
 import { useAuth, useModal, useToast } from "@hooks";
-import { HStack } from "native-base";
 import { useRegisterUserInGameMutation } from "@state/api/game";
 import { useRefreshTokenMutation } from "@state/api/auth";
+import { theme } from "@utils";
+
 
 type Props = {
   game: GameInterface;
@@ -52,8 +54,10 @@ const QuizEntranceCard = ({ game }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const { showError } = useToast();
 
+  const playerisInGame = game.players.map((player) => player.user._id).includes(user._id)
+
   function checkUserRegisteration() {
-    if (game.players.map((player) => player.user._id).includes(user._id)) {
+    if (playerisInGame) {
       navigate("Game", { gameId: game._id });
     } else {
       setIsOpen(true);
@@ -62,7 +66,6 @@ const QuizEntranceCard = ({ game }: Props) => {
 
   useEffect(() => {
     if (registerSuccess) {
-      checkInitailAuth();
       setIsOpen(false);
       navigate("Game", { gameId: game._id });
     }
@@ -77,9 +80,10 @@ const QuizEntranceCard = ({ game }: Props) => {
     <>
       <Touch onPress={checkUserRegisteration}>
         <Card
+        
           bgColor={
-            game.players.map((player) => player.user._id).includes(user._id)
-              ? "selected"
+            playerisInGame
+              ? theme.colors.info
               : undefined
           }
         >
@@ -90,7 +94,7 @@ const QuizEntranceCard = ({ game }: Props) => {
               <PlayersAvatarGroup players={game.players} />
             </Column>
             <RowBetween h="full" w="1/6">
-              <View h="full" w={1} borderRadius={10} background="success" />
+              <View h="full" w={1} borderRadius={10} background={playerisInGame ? "success" : 'secondary'} />
               <TextNormal>
                 {moment.unix(game.startTime).format("H : mm")}
               </TextNormal>
@@ -103,52 +107,53 @@ const QuizEntranceCard = ({ game }: Props) => {
         leastDestructiveRef={cancelRef}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
+        _backdrop={{ backgroundColor: 'primary', opacity: 0.8 }}
       >
-        <AlertDialog.Content backgroundColor="primary">
+        <AlertDialog.Content backgroundColor="modal">
           {/* <AlertDialog.CloseButton /> */}
           <AlertDialog.Header
-            backgroundColor="primary"
+            backgroundColor="modal"
             alignItems="center"
             textAlign="center"
+            py={2}
+            px={5}
           >
-            <HStack space={3}>
-              <Avatar
-                size="xs"
-                source={{
-                  uri: game.image,
-                }}
-              />
-              <Text fontSize={17} fontWeight="600">
+            <RowBetween w='full'><Avatar
+              size="sm"
+              source={{
+                uri: game.image,
+              }}
+            />
+              <TextTitle>
                 ثبت نام در مسابقه
-              </Text>
-            </HStack>
+              </TextTitle>
+
+            </RowBetween>
           </AlertDialog.Header>
-          <AlertDialog.Body backgroundColor="primary" alignItems="end">
-            <HStack>
-              <Text fontSize={17}> {game.type.toLocaleString()} سکه</Text>
-              <Text fontSize={17}>ورودی مسابقه : </Text>
-            </HStack>
-            <HStack>
-              <Text fontSize={17}>{game.players.length} نفر</Text>
-              <Text fontSize={17}>شرکت کنندگان تا این لحظه : </Text>
-            </HStack>
-            <HStack>
-              <Text fontWeight="600" color="danger" fontSize={17}>
-                {Math.round(
-                  game.players.length * game.type * 0.7
-                ).toLocaleString()}{" "}
-                سکه{" "}
-              </Text>
-              <Text fontWeight="600" fontSize={17}>
-                جایزه نفر اول :{" "}
-              </Text>
-            </HStack>
+          <AlertDialog.Body backgroundColor="modal" alignItems="end">
+            <Column space={2}>
+            <RowBetween>
+              <TextNormal color='warning'> {game.type.toLocaleString()} سکه</TextNormal>
+              <TextNormal>ورودی مسابقه </TextNormal>
+            </RowBetween>
+            <RowBetween>
+              <TextNormal color='warning'>{game.players.length} نفر</TextNormal>
+              <TextNormal>شرکت کنندگان تا این لحظه </TextNormal>
+            </RowBetween>
+            <RowBetween>
+              <TextNormal color='warning'>{`${Math.round(game.players.length * game.type * 0.7).toLocaleString()} سکه`}</TextNormal>
+              <TextNormal>
+                جایزه نفر اول
+              </TextNormal>
+            </RowBetween>
+            </Column>
+            
           </AlertDialog.Body>
-          <AlertDialog.Footer backgroundColor="primary">
+          <AlertDialog.Footer backgroundColor="modal">
             <Button.Group space={2}>
               <Button
                 variant="unstyled"
-                w="50"
+                w="1/2"
                 backgroundColor="warning"
                 onPress={() => setIsOpen(false)}
                 ref={cancelRef}
@@ -157,7 +162,7 @@ const QuizEntranceCard = ({ game }: Props) => {
               </Button>
               <Button
                 isLoading={registerloading}
-                w="50"
+                w="1/2"
                 backgroundColor="success"
                 onPress={() => {
                   registerUser({ gameId: game._id, userId: user._id });

@@ -16,13 +16,15 @@ import React, { useEffect, useState } from "react";
 import isCorrect from "../checkCorrectAnswer";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { FontAwesome } from "@expo/vector-icons";
+import CircularProgress from "react-native-circular-progress-indicator";
 
 type Props = {
   game: GameInterface;
   players: PlayerInterface[];
+  changeGameStatus: any
 };
 
-const GameStarted = ({ game, players }: Props) => {
+const GameStarted = ({ game, players, changeGameStatus }: Props) => {
   const [
     answerQuestion,
     {
@@ -56,17 +58,12 @@ const GameStarted = ({ game, players }: Props) => {
 
   return (
     <RowBetween h="full" pb={3}>
-      <Column h="full" w="85%" bg="secondary" borderRadius={10}>
+      <Column h="full" w="85%" bg="info" borderRadius={10}>
         <RowBetween p={5}>
-          <CountdownCircleTimer
-            isPlaying
-            size={50}
-            duration={game.endTime - game.nowTime}
-            colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-            colorsTime={[10, 6, 3, 0]}
-          >
-            {({ remainingTime }) => <Text>{remainingTime}</Text>}
-          </CountdownCircleTimer>
+     
+           
+   
+        
           <Center
             borderRadius="full"
             borderWidth={3}
@@ -76,6 +73,29 @@ const GameStarted = ({ game, players }: Props) => {
           >
             <TextNormal>{userPlayer?.point}</TextNormal>
           </Center>
+          <CircularProgress
+           
+           value={0}
+           radius={50}
+           maxValue={500}
+           initialValue={game.endTime - game.nowTime}
+           progressValueColor={'#fff'}
+           progressValueStyle={{fontSize: 20, fontFamily: 'Yekan'}}
+           activeStrokeWidth={5}
+           inActiveStrokeWidth={15}
+           
+           duration={(game.endTime - game.nowTime) * 1000}
+           onAnimationComplete={changeGameStatus}
+           progressFormatter={(value: number) => {
+             'worklet';
+       
+             const seconds = Math.floor(value % 60);
+             const minutes = Math.floor((value / 60) % 60);
+
+ 
+             return `${minutes < 10 ? '0'+minutes : minutes} : ${seconds < 10 ? '0'+seconds : seconds}`; // 2 decimal places
+           }}
+         />
           <Center
             borderRadius="full"
             borderWidth={3}
@@ -92,7 +112,7 @@ const GameStarted = ({ game, players }: Props) => {
         </RowBetween>
         {currQuestion && (
           <Column space={2} px={5} justifyContent="center" alignItems="center">
-            <Image radius={100} uri={game.image} size={250} />
+            <Image radius={50} uri={game.image} size={150} />
             <TextNormal color="primary">{currQuestion.body} </TextNormal>
             {[1, 2, 3, 4].map((option) => (
               <Button

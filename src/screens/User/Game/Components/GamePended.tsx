@@ -9,22 +9,45 @@ import {
 } from "@components";
 import { FontAwesome } from "@expo/vector-icons";
 import { useAuth } from "@hooks";
-import CountDown from "@screens/User/Components/CountDown";
 import { GameInterface } from "@types";
 import { Center, Icon } from "native-base";
 import React from "react";
+import CircularProgress from 'react-native-circular-progress-indicator';
 
 type Props = {
   game: GameInterface;
+  changeGameStatus: any
 };
 
-const GamePended = ({ game }: Props) => {
+const GamePended = ({ game, changeGameStatus }: Props) => {
   const { user } = useAuth();
   return (
     <Column h="full" pb={5}>
       <Center h="1/2">
-        <CountDown start={game.startTime} now={game.nowTime} onEnd={() => {}} />
+        <CircularProgress
+          value={0}
+          radius={120}
+          maxValue={500}
+          initialValue={game.startTime - game.nowTime}
+          progressValueColor={'#fff'}
+          progressValueStyle={{fontSize: 46, fontFamily: 'Yekan'}}
+          activeStrokeWidth={5}
+          inActiveStrokeWidth={15}
+          duration={(game.startTime - game.nowTime) * 1000}
+          onAnimationComplete={changeGameStatus}
+          progressFormatter={(value: number) => {
+            'worklet';
+      
+            const seconds = Math.floor(value % 60);
+            const minutes = Math.floor((value / 60) % 60);
+            const hours = Math.floor(value / 3600)
+
+            return `${hours < 10 ? '0'+hours : hours} : ${minutes < 10 ? '0'+minutes : minutes} : ${seconds < 10 ? '0'+seconds : seconds}`; // 2 decimal places
+          }}
+        />
       </Center>
+
+
 
       <Card h="1/2">
         <RowBetween p={2}>

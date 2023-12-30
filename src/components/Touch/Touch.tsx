@@ -7,7 +7,7 @@ interface Props extends TouchableOpacityProps {
 }
 const Touch: React.FC<Props> = ({ children, ...rest }) => {
   return (
-    <TouchableOpacity style={{ padding: 5 }} activeOpacity={0.8} {...rest}>
+    <TouchableOpacity style={{ padding: 5 }} activeOpacity={0.9} {...rest}>
       {children}
     </TouchableOpacity>
   );

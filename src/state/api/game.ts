@@ -22,6 +22,7 @@ const clientApi = Api.injectEndpoints({
         url: `/games/${gameId}`,
         method: "GET",
       }),
+      keepUnusedDataFor: 0
     }),
 
     /*

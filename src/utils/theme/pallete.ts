@@ -1,13 +1,15 @@
 export default {
   primary: "#040303",
-  secondary: "#C69749",
-  info: "#2F3032",
+  secondary: "#D89216",
+  info: "#474E68",
   success: "#019267",
   white: "#F6F1E9",
   danger: "#D21312",
   warning: "#E55807",
+  header: '#171717',
+  modal: '#2F3032',
   text: {
-    secondary: "#C69749",
+    secondary: "#D89216",
     main: "#F6F1E9",
     muted: "#B0A695",
     light: "#F6F1E9",
@@ -16,7 +18,7 @@ export default {
   },
   card: {
     background: "#171717",
-    shadow: "#C69749",
+    shadow: "#D89216",
   },
   bg: {
     muted: "#3b5d62",

@@ -31,7 +31,7 @@ const MainHeader = () => {
 
   return (
     <Column>
-      <RowBetween mx={2} borderRadius={5} height={12} px={4} my={2} bg="info">
+      <RowBetween mx={2} borderRadius={5} height={12} px={4} my={2} bg="card.background">
         <Touch>
           <Row bg="light.500" borderRadius={15} pr={2} h={8}>
             <Animation size={40} name={CoinAnimation} />

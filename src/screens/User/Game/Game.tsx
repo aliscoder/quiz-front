@@ -48,9 +48,9 @@ const Game = () => {
     <Error />
   ) : (
     <Container>
-      {status == "before" && <GamePended game={game} />}
+      {status == "before" && <GamePended game={game} changeGameStatus={() => setStatus('start')} />}
       {status == "start" && players && (
-        <GameStarted players={players} game={game} />
+        <GameStarted players={players} game={game} changeGameStatus={() => setStatus('after')} />
       )}
       {/* {status == "after" && <GameFinished game={game} />} */}
     </Container>
